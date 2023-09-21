@@ -4,6 +4,8 @@
 #include "AIController.h"
 #include "EnemyAIController.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAggroDelegate, APawn*, Enemy);
+
 class UHealthComponent;
 class AGrunt;
 
@@ -25,6 +27,8 @@ public:
 	TObjectPtr<UHealthComponent> MyHealthComp;
 	UFUNCTION()
 	void OnDamaged(int DamageTaken);
+
+	FOnAggroDelegate OnAggro;
 
 protected:
 	virtual void BeginPlay() override;

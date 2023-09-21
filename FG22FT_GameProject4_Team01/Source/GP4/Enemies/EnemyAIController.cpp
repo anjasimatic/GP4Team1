@@ -32,6 +32,7 @@ void AEnemyAIController::BecomeAggro()
 {
 	GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	GetBlackboardComponent()->SetValueAsBool(TEXT("IsAggro"), true);
+	OnAggro.Broadcast(GetPawn());
 }
 
 void AEnemyAIController::OnDamaged(int DamageTaken)
