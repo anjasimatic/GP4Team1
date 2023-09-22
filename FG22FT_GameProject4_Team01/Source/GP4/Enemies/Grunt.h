@@ -4,6 +4,7 @@
 #include "EnemyBase.h"
 #include "Grunt.generated.h"
 
+class AEnemyAIController;
 class APatrolRoute;
 
 UENUM()
@@ -26,6 +27,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<APatrolRoute> PatrolRoute;
+
+	UFUNCTION(BlueprintCallable)
+	void Stun(float Duration);
+
+	UPROPERTY()
+	TObjectPtr<AEnemyAIController> MyController;
 
 protected:
 	virtual void BeginPlay() override;

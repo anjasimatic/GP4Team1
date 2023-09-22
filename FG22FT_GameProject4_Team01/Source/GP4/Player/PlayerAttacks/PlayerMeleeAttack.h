@@ -34,6 +34,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	float PlayerForwardStepPower = 100.f;
 	UPROPERTY(EditAnywhere)
+	bool Staggers = false;
+	UPROPERTY(EditAnywhere)
+	float StaggerDuration = 1.f;
+	UPROPERTY(EditAnywhere)
 	float ShapeThickness = 35.f;
 
 	float GetCurrentMeleeTime() {return CurrentStep / StepAmount;};

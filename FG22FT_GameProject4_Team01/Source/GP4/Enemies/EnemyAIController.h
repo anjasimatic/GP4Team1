@@ -30,8 +30,15 @@ public:
 
 	FOnAggroDelegate OnAggro;
 
+	FTimerHandle StaggerStunHandle; 
+	void Stagger(float Duration);
+	void Stun(float Duration);
+
 protected:
 	virtual void BeginPlay() override;
 
 	virtual FRotator GetControlRotation() const override;
+
+	void FinishStagger();
+	void FinishStun();
 };
