@@ -1,5 +1,7 @@
 ﻿#include "Grunt.h"
 
+#include "EnemyAIController.h"
+
 AGrunt::AGrunt()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -9,5 +11,10 @@ void AGrunt::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//Set my color depending on my emotion type
+	MyController = Cast<AEnemyAIController>(GetController());
+}
+
+void AGrunt::Stun(float Duration)
+{
+	MyController->Stun(Duration);
 }
