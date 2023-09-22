@@ -91,9 +91,10 @@ void UPlayerMeleeAttack::AttackTimer()
 		//Stagger enemy
 		if(Staggers)
 		{
-			TObjectPtr<AEnemyAIController> Controller = Cast<AEnemyAIController>(Cast<APawn>(Hit.GetActor())->GetController());
-			if(Controller)
+			TObjectPtr<APawn> Pawn = Cast<APawn>(Hit.GetActor());
+			if(Pawn)
 			{
+				TObjectPtr<AEnemyAIController> Controller = Cast<AEnemyAIController>(Pawn->GetController());
 				Controller->Stagger(StaggerDuration);
 			}
 		}
