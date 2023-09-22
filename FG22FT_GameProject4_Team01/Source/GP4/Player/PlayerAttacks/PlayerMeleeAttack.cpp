@@ -91,7 +91,11 @@ void UPlayerMeleeAttack::AttackTimer()
 		//Stagger enemy
 		if(Staggers)
 		{
-			Cast<AEnemyAIController>(Cast<APawn>(Hit.GetActor())->GetController())->Stagger(StaggerDuration);
+			TObjectPtr<AEnemyAIController> Controller = Cast<AEnemyAIController>(Cast<APawn>(Hit.GetActor())->GetController());
+			if(Controller)
+			{
+				Controller->Stagger(StaggerDuration);
+			}
 		}
 
 		//Increase player's highest emotion state since hit was successful
