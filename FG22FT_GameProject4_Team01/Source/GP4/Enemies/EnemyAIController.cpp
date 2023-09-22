@@ -1,5 +1,4 @@
 ﻿#include "EnemyAIController.h"
-
 #include "BrainComponent.h"
 #include "Grunt.h"
 #include "BehaviorTree/BlackboardComponent.h"
