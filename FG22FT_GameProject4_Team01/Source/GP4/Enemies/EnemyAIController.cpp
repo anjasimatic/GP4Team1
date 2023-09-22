@@ -1,4 +1,6 @@
 ﻿#include "EnemyAIController.h"
+
+#include "BrainComponent.h"
 #include "Grunt.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GP4/Components/HealthComponent.h"
@@ -22,6 +24,7 @@ void AEnemyAIController::BeginPlay()
 	//Default values in blackboard
 	GetBlackboardComponent()->SetValueAsBool(TEXT("IsAggro"), false);
 	GetBlackboardComponent()->SetValueAsVector(TEXT("PatrolPoint"), GetPawn()->GetActorLocation());
+	GetBlackboardComponent()->SetValueAsBool(TEXT("IsActive"), true);
 
 	//Aggro enemy when damaged
 	MyHealthComp = Cast<UHealthComponent>(GetPawn()->GetComponentByClass(UHealthComponent::StaticClass()));
@@ -47,4 +50,26 @@ FRotator AEnemyAIController::GetControlRotation() const
 {
 	if(!GetPawn()) return FRotator::ZeroRotator;
 	return FRotator(0.0f, GetPawn()->GetActorRotation().Yaw, 0.0f);
+}
+
+void AEnemyAIController::Stagger(float Duration)
+{
+	BrainComponent->PauseLogic(TEXT(""));
+	GetWorld()->GetTimerManager().SetTimer(StaggerStunHandle, this, &AEnemyAIController::FinishStagger, Duration);
+}
+
+void AEnemyAIController::Stun(float Duration)
+{
+	BrainComponent->StopLogic(TEXT(""));
+	GetWorld()->GetTimerManager().SetTimer(StaggerStunHandle, this, &AEnemyAIController::FinishStun, Duration);
+}
+
+void AEnemyAIController::FinishStagger()
+{
+	BrainComponent->ResumeLogic(TEXT(""));
+}
+
+void AEnemyAIController::FinishStun()
+{
+	BrainComponent->StartLogic();
 }

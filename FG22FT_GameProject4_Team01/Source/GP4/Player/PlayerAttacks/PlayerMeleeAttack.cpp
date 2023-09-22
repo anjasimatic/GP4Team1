@@ -2,6 +2,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "GP4/Components/EmotionComponent.h"
 #include "GP4/Components/HealthComponent.h"
+#include "GP4/Enemies/EnemyAIController.h"
 #include "GP4/Enemies/EnemyBase.h"
 #include "GP4/Enemies/Grunt.h"
 #include "GP4/Player/GP4Character.h"
@@ -86,6 +87,12 @@ void UPlayerMeleeAttack::AttackTimer()
 		
 		//Damage enemy
 		Cast<UHealthComponent>(Hit.GetActor()->GetComponentByClass(UHealthComponent::StaticClass()))->Damage(DamageToDeal); //Damage enemy
+
+		//Stagger enemy
+		if(Staggers)
+		{
+			Cast<AEnemyAIController>(Cast<APawn>(Hit.GetActor())->GetController())->Stagger(StaggerDuration);
+		}
 
 		//Increase player's highest emotion state since hit was successful
 		DamageSelfEmotion(); 
