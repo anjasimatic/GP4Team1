@@ -9,6 +9,8 @@
 	}
 
 	void UPlayerBlockingComponent::BeginPlay(){
+		Super::BeginPlay();
+		
 		Owner = GetOwner();
 	}
 
