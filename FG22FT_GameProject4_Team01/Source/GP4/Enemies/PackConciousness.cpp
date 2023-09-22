@@ -52,7 +52,10 @@ void APackConciousness::ReEvaluateWhoseTurnItIs()
 	float ClosestDist = 100000.f;
 	for(int i = 0; i < AggroControllers.Num(); i++)
 	{
-		float Dist = FVector::Distance(AggroControllers[i]->GetPawn()->GetActorLocation(), UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
+		TObjectPtr<APawn> Pawn = AggroControllers[i]->GetPawn();
+		if(!Pawn) continue;
+		
+		float Dist = FVector::Distance(Pawn->GetActorLocation(), UGameplayStatics::GetPlayerPawn(GetWorld(), 0)->GetActorLocation());
 		if(Dist < ClosestDist)
 		{
 			ClosestDist = Dist;
