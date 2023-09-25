@@ -76,3 +76,8 @@ FVector ABoss::GetRandomTeleportLocation()
 
 	return TeleportLocations[CurrentTeleportLocation]->GetActorLocation();
 }
+
+void ABoss::PauseBoss(float Duration)
+{
+	MyController->Stun(Duration);
+}

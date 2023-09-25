@@ -36,6 +36,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Teleport();
 
+	UFUNCTION(BlueprintCallable)
+	void PauseBoss(float Duration);
+
 protected:
 	virtual void BeginPlay() override;
 
