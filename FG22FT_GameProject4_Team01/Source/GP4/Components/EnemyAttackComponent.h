@@ -37,6 +37,15 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	float GetCurrentCastTime();
+	
+	UFUNCTION(BlueprintCallable)
+	float GetCurrentMeleeTime();
+	float MeleeAttackTime = -1.f;
+	
+	UFUNCTION(BlueprintCallable)
+	void StartMeleeAttackTimer(float InTime);
+	void FinishMeleeAttackTimer();
+	FTimerHandle MeleeAttackTimer;
 
 protected:
 	virtual void BeginPlay() override;

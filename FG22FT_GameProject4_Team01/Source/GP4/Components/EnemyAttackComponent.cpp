@@ -51,3 +51,25 @@ float UEnemyAttackComponent::GetCurrentCastTime()
 
 	return -1.f;
 }
+
+float UEnemyAttackComponent::GetCurrentMeleeTime()
+{
+	if(GetWorld()->GetTimerManager().IsTimerActive(MeleeAttackTimer))
+	{
+		float ElapsedTime = GetWorld()->GetTimerManager().GetTimerElapsed(MeleeAttackTimer);
+		return ElapsedTime / MeleeAttackTime;
+	}
+
+	return -1.f;
+}
+
+void UEnemyAttackComponent::StartMeleeAttackTimer(float InTime)
+{
+	MeleeAttackTime = InTime;
+	GetWorld()->GetTimerManager().SetTimer(MeleeAttackTimer, this, &UEnemyAttackComponent::FinishMeleeAttackTimer, MeleeAttackTime);
+}
+
+void UEnemyAttackComponent::FinishMeleeAttackTimer()
+{
+	GetWorld()->GetTimerManager().ClearTimer(MeleeAttackTimer);
+}
