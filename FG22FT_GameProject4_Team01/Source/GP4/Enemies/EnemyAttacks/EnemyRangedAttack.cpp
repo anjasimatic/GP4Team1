@@ -5,7 +5,7 @@
 
 void UEnemyRangedAttack::Attack()
 {
-	ExplosionLoc = Target->GetActorLocation();
+	ExplosionLoc = Target->GetActorLocation() - FVector(0.f,0.f,50.f);
 
 	//spawn decal at target loc
 	TObjectPtr<ADecalActor> Decal = GetWorld()->SpawnActor<ADecalActor>(ExplosionLoc, FRotator::ZeroRotator);
