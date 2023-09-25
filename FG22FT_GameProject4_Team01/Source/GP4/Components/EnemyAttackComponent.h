@@ -34,6 +34,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Attack();
+	
+	UFUNCTION(BlueprintCallable)
+	float GetCurrentCastTime();
 
 protected:
 	virtual void BeginPlay() override;

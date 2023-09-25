@@ -1,5 +1,6 @@
 ﻿#include "EnemyAttackComponent.h"
 #include "GP4/Enemies/EnemyAttacks/EnemyAttackBase.h"
+#include "GP4/Enemies/EnemyAttacks/EnemyRangedAttack.h"
 #include "Kismet/GameplayStatics.h"
 
 UEnemyAttackComponent::UEnemyAttackComponent()
@@ -35,4 +36,18 @@ void UEnemyAttackComponent::Attack()
 	AttackSets[AttackSetIndex].AttackInstances[RandomAttackInd]->Attack();
 
 	bIsBusy = false;
+}
+
+float UEnemyAttackComponent::GetCurrentCastTime()
+{
+	//Find current ranged attack if it exists
+	TObjectPtr<UEnemyRangedAttack> RangedAttack;
+	RangedAttack = Cast<UEnemyRangedAttack>(AttackSets[AttackSetIndex].AttackInstances[0]);
+
+	if(RangedAttack)
+	{
+		return RangedAttack->GetCurrentCastTime();
+	}
+
+	return -1.f;
 }
