@@ -23,6 +23,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UNiagaraSystem> ExplosionNiagaraSystem;
 
+	float GetCurrentCastTime();
+
 private:
 	FTimerHandle RangedAttackHandle;
 	void DoRangedAttackTimer();

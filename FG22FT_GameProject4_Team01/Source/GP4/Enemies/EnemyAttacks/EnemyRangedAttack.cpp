@@ -29,3 +29,15 @@ void UEnemyRangedAttack::DoRangedAttackTimer()
 		DamageTarget();
 	}
 }
+
+float UEnemyRangedAttack::GetCurrentCastTime()
+{
+	//Get elapsed time
+	float ElapsedTime = GetWorld()->GetTimerManager().GetTimerElapsed(RangedAttackHandle);
+	//Get elapsed time in range from 0 to 1
+	if(ElapsedTime > 0.f && TimeBeforeExplosion > 0.f)
+	{
+		ElapsedTime /= TimeBeforeExplosion;
+	}
+	return ElapsedTime;
+}
