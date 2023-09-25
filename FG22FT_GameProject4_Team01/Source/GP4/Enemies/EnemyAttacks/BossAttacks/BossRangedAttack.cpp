@@ -10,28 +10,36 @@ void UBossRangedAttack::Attack()
 	
 	for(int i = 0; i <= AmountOfExplosions; i++)
 	{
-		//Get location to explode at, retry if the new explosion is too close to previous explosions
 		FVector Loc;
-		float SmallestDist;
-		do
-		{
-			//Get random location within range
-			float DirX = FMath::RandRange(Target->GetActorLocation().X - ExplosionSpawnRangeAroundPlayer, Target->GetActorLocation().X + ExplosionSpawnRangeAroundPlayer);
-			float DirY = FMath::RandRange(Target->GetActorLocation().Y - ExplosionSpawnRangeAroundPlayer, Target->GetActorLocation().Y + ExplosionSpawnRangeAroundPlayer);
-			Loc = FVector(DirX, DirY, 0.f);
 
-			//Get distance to closest previous explosion
-			SmallestDist = 100000.f;
-			for(int j = 0; j < ExplosionLocs.Num(); j++)
+		//First explosion always gets placed at the player's location
+		if(i == 0)
+		{
+			Loc = Target->GetActorLocation() - FVector(0.f,0.f,50.f);
+		}else
+		{
+			//Get location to explode at, retry if the new explosion is too close to previous explosions
+			float SmallestDist;
+			do
 			{
-				float Dist = FVector::Dist(ExplosionLocs[j], Loc);
-				if(Dist < SmallestDist)
+				//Get random location within range
+				float DirX = FMath::RandRange(Target->GetActorLocation().X - ExplosionSpawnRangeAroundPlayer, Target->GetActorLocation().X + ExplosionSpawnRangeAroundPlayer);
+				float DirY = FMath::RandRange(Target->GetActorLocation().Y - ExplosionSpawnRangeAroundPlayer, Target->GetActorLocation().Y + ExplosionSpawnRangeAroundPlayer);
+				Loc = FVector(DirX, DirY, 0.f);
+
+				//Get distance to closest previous explosion
+				SmallestDist = 100000.f;
+				for(int j = 0; j < ExplosionLocs.Num(); j++)
 				{
-					SmallestDist = Dist;	
+					float Dist = FVector::Dist(ExplosionLocs[j], Loc);
+					if(Dist < SmallestDist)
+					{
+						SmallestDist = Dist;	
+					}
 				}
 			}
+			while (SmallestDist < ExplosionSeparationAmount);
 		}
-		while (SmallestDist < ExplosionSeparationAmount);
 
 		//Found a good location, add to array
 		ExplosionLocs.Add(Loc);
