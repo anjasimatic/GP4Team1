@@ -27,7 +27,7 @@ void APackConciousness::BeginPlay()
 	for (TObjectPtr<AActor> Grunt : AllGrunts)
 	{
 		TObjectPtr<AEnemyAIController> Controller = Cast<AEnemyAIController>(Cast<APawn>(Grunt)->GetController());
-		Controller->OnAggro.AddDynamic(this, &APackConciousness::OnEnemyAggro);
+		Controller->OnAggro.AddUniqueDynamic(this, &APackConciousness::OnEnemyAggro);
 	}
 }
 
@@ -66,7 +66,7 @@ void APackConciousness::ReEvaluateWhoseTurnItIs()
 	//Let chosen enemy attack
 	AggroControllers[BestIndex]->GetBlackboardComponent()->SetValueAsBool(TEXT("IsMyTurn"), true);
 	GruntWhoseTurnItIs = AggroControllers[BestIndex]->GetPawn();
-	Cast<UHealthComponent>(GruntWhoseTurnItIs->GetComponentByClass(UHealthComponent::StaticClass()))->OnDeath.AddDynamic(this, &APackConciousness::OnEnemyDeath);
+	Cast<UHealthComponent>(GruntWhoseTurnItIs->GetComponentByClass(UHealthComponent::StaticClass()))->OnDeath.AddUniqueDynamic(this, &APackConciousness::OnEnemyDeath);
 }
 
 void APackConciousness::OnEnemyDeath()
