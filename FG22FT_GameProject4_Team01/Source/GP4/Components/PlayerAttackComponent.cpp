@@ -38,6 +38,7 @@ void UPlayerAttackComponent::BeginPlay()
 			TObjectPtr<UPlayerAttackBase> NewAttackObj = NewObject<UPlayerAttackBase>(this, Template);
 			SorrowAttackSets[i].AttackInstances.Add(NewAttackObj);
 			NewAttackObj->AttackSetup();
+			NewAttackObj->Damage *= SorrowAttackSets[i].DamageMultiplier;
 			NewAttackObj->OnAttackFinished.AddDynamic(this, &UPlayerAttackComponent::AttackFinished);
 			if(TObjectPtr<UPlayerRangedAttack> RangedAttack = Cast<UPlayerRangedAttack>(NewAttackObj))
 			{
