@@ -54,6 +54,8 @@ void UPlayerRangedAttack::FinishCast()
 		SpawnedProj->bMyEmotionState = PlayerEmotionComponent->GetEmotionState(); //Record emotion state when the projectile is shot
 		SpawnedProj->OnHitEnemy.AddDynamic(this, &UPlayerRangedAttack::EnemyDamaged);
 	}
+
+	OnAttack.Broadcast(false);
 	
 	//Cooldown
 	StartCooldown();

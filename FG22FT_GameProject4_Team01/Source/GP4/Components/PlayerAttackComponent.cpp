@@ -23,6 +23,7 @@ void UPlayerAttackComponent::BeginPlay()
 			NewAttackObj->AttackSetup();
 			NewAttackObj->Damage *= HatredAttackSets[i].DamageMultiplier;
 			NewAttackObj->OnAttackFinished.AddDynamic(this, &UPlayerAttackComponent::AttackFinished);
+			NewAttackObj->OnAttack.AddDynamic(this, &UPlayerAttackComponent::OnAttackEvent);
 			if(TObjectPtr<UPlayerRangedAttack> RangedAttack = Cast<UPlayerRangedAttack>(NewAttackObj))
 			{
 				RangedAttack->OnRangedAttackHit.AddDynamic(this, &UPlayerAttackComponent::RollDiceForSkipCast);
@@ -40,6 +41,7 @@ void UPlayerAttackComponent::BeginPlay()
 			NewAttackObj->AttackSetup();
 			NewAttackObj->Damage *= SorrowAttackSets[i].DamageMultiplier;
 			NewAttackObj->OnAttackFinished.AddDynamic(this, &UPlayerAttackComponent::AttackFinished);
+			NewAttackObj->OnAttack.AddDynamic(this, &UPlayerAttackComponent::OnAttackEvent);
 			if(TObjectPtr<UPlayerRangedAttack> RangedAttack = Cast<UPlayerRangedAttack>(NewAttackObj))
 			{
 				RangedAttack->OnRangedAttackHit.AddDynamic(this, &UPlayerAttackComponent::RollDiceForSkipCast);
@@ -90,7 +92,6 @@ void UPlayerAttackComponent::Attack()
 	
 	//Perform attack
 	CurrentAttackSet.AttackInstances[CurrentAttackIndex]->Attack();
-	OnAttack.Broadcast();
 
 	//Restart combo expiration timer
 	GetWorld()->GetTimerManager().SetTimer(ExpireComboHandle, this, &UPlayerAttackComponent::ExpireCombo, TimeBeforeComboExpires);
@@ -251,4 +252,9 @@ float UPlayerAttackComponent::GetCurrentMeleeTime()
 	}
 
 	return -1.f;
+}
+
+void UPlayerAttackComponent::OnAttackEvent(bool IsMelee)
+{
+	OnAttack.Broadcast(IsMelee);
 }
