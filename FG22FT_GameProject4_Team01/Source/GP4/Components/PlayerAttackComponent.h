@@ -7,7 +7,7 @@
 class UEmotionComponent;
 class UPlayerAttackBase;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttackDelegate, bool, IsMelee);
 
 UENUM()
 enum EEmotionComparisonType
@@ -91,6 +91,9 @@ protected:
 private:
 	UFUNCTION()
 	void AttackFinished(bool bCanceled);
+
+	UFUNCTION()
+	void OnAttackEvent(bool IsMelee);
 
 	TObjectPtr<UEmotionComponent> EmotionComponent;
 

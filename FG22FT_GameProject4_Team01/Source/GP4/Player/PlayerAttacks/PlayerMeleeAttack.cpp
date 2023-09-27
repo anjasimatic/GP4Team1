@@ -40,6 +40,8 @@ void UPlayerMeleeAttack::Attack()
 
 	//Forward step
 	Player->LaunchCharacter(Player->GetActorForwardVector() * PlayerForwardStepPower, true, false);
+
+	OnAttack.Broadcast(true);
 	
 	//Start attack
 	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandle, this, &UPlayerMeleeAttack::AttackTimer, GetWorld()->GetDeltaSeconds(), true, SwingStartTimeOffset);

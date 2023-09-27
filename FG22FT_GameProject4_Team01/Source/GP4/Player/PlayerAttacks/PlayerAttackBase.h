@@ -5,6 +5,7 @@
 #include "PlayerAttackBase.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttackFinishedDelegate, bool, bCanceled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttack, bool, IsMelee);
 
 class UEmotionComponent;
 class AGP4Character;
@@ -35,6 +36,8 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool bShowDebug = false;
+
+	FOnAttack OnAttack;
 
 protected:
 	UPROPERTY()
