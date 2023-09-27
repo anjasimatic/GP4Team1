@@ -2,6 +2,10 @@
 	"BuildId": "25360045",
 	"Modules": 
 	{
+<<<<<<< Updated upstream
 		"GP4": "UnrealEditor-GP4.dll"
+=======
+		"GP4": "UnrealEditor-GP4-2386.dll"
+>>>>>>> Stashed changes
 	}
 }
